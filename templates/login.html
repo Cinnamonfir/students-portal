@@ -118,16 +118,11 @@
                     </div>
                     <table>
                         <tr>
-                            <th>Name</th>
-                            <th>Code</th>
-                            <th>Faculty</th>
-                            <th>Option</th>
-                        </tr>
-                        <tr>
-                            <td>Introductory General Chemistry</td>
-                            <td>CHEM 101</td>
-                            <td>Physical Science</td>
-                            <td><a href="#" class="btn">View</a></td>
+                            <form action="index.html" method="post">
+                                {% csrf_token %}
+                                <p style="text-decoration: none;">{{form.as_p}}</p>
+                                <td><button type="submit" class="btn">Submit</button></td>
+                            </form>
                         </tr>
                     </table>
                 </div>

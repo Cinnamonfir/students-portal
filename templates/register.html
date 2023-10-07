@@ -118,16 +118,16 @@
                     </div>
                     <table>
                         <tr>
-                            <th>Name</th>
-                            <th>Code</th>
-                            <th>Faculty</th>
-                            <th>Option</th>
-                        </tr>
-                        <tr>
-                            <td>Introductory General Chemistry</td>
-                            <td>CHEM 101</td>
-                            <td>Physical Science</td>
-                            <td><a href="#" class="btn">View</a></td>
+                            {% for message in messages %}
+                            <h5>{{message}}</h5>
+                            {% endfor %}
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                <input type="text" name="username">
+                                <p>Password: </p> <input type="password" name="password" style="width: 180px;">
+                                <p>Confirm Password: </p> <input type="password" name="password2" style="width: 180px;">
+                                <td><button type="submit" class="btn">Submit</button></td>
+                            </form>
                         </tr>
                     </table>
                 </div>

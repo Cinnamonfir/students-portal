@@ -1,5 +1,4 @@
 from django import forms
-
 from .models import Student
 
 class Studentform(forms.ModelForm):
@@ -10,3 +9,5 @@ class Studentform(forms.ModelForm):
             'name',
             'reg_no'
         ]
+
+
