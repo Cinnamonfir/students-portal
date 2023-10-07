@@ -1,166 +1,20 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-    <link rel="stylesheet" href="{% static 'css/boxicons.min.css' %}">
-    <title>Student Databese</title>
-</head>
-
-<body>
-    <nav class="sidebar close">
-        <header>
-            <div class="image-index">
-                <span class="image">
-                    <img src="{% static 'images/logo.png' %}" alt="logo">
-                </span>
-                <div class="text header-text">
-                    <span class="name">ABU DEVs</span>
-                    <span class="profession">Admin Dashboard</span>
-                </div>
-            </div>
-            <i class="bx bx-chevron-right toggle"></i>
-        </header>
-
-        <div class="menu-bar">
-            <div class="menu">
-                <li class="search-box">
-                    <i class="bx bx-search icon"></i>
-                    <input type="text" placeholder="Search...">
-                </li>
-
-                <ul class="menu-links">
-                    <li class="nav-links">
-                        <a href="">
-                            <i class="bx bx-home-alt icon"></i>
-                            <span class="text nav-text">Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-links">
-                        <a href="">
-                            <i class="bx bx-user-circle icon"></i>
-                            <span class="text nav-text">Students</span>
-                        </a>
-                    </li>
-                    <li class="nav-links">
-                        <a href="">
-                            <i class="bx bx-user-circle icon"></i>
-                            <span class="text nav-text">Teachers</span>
-                        </a>
-                    </li>
-                    <li class="nav-links">
-                        <a href="">
-                            <i class="bx bx-book-alt icon"></i>
-                            <span class="text nav-text">Courses</span>
-                        </a>
-                    </li>
-                    <li class="nav-links">
-                        <a href="">
-                            <i class="bx bx-wallet icon"></i>
-                            <span class="text nav-text">Wallet</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="bottom-content">
-                <li class="">
-                    <a href="#">
-                        <i class="bx bx-log-out icon"></i>
-                        <span class="text nav-text">Logout</span>
-                    </a>
-                </li>
-
-                <li class="mode">
-                    <div class="moon-sun">
-                        <i class="bx bx-moon icon moon"></i>
-                        <i class="bx bx-sun icon sun"></i>
-                    </div>
-                    <span class="mode-text text">Dark Mode</span>
-
-                    <div class="toggle-switch">
-                        <span class="switch"></span>
-                    </div>
-                </li>
-
-            </div>
-
-        </div>
-    </nav>
-
-    <section class="home">
-        <div class="text">Dashboard</div>
-
-        <div class="content">
-            <div class="cards">
-
-                <div class="card">
-                    <div class="box">
-                        <h1>{{students.count}}</h1>
-                        <h3>Students Registered</h3>
-                    </div>
-                    <div class="icon-case">
-                        <img src="{% static 'images/student.png' %}" alt="">
-                    </div>
-                </div>
-            </div>
-            <div class="content-2">
+{% extends 'index.html' %}
+                {% block content %}
                 <div class="subjects">
                     <div class="title">
-                        <h2>All Courses</h2>
-                        <a href="#" class="btn">View All</a>
+                        <h2>Login Page</h2>
+                        <a href="{% url 'register' %}" class="btn">Register</a>
                     </div>
                     <table>
                         <tr>
-                            <form action="index.html" method="post">
+                            <form action="" method="post">
                                 {% csrf_token %}
-                                <p style="text-decoration: none;">{{form.as_p}}</p>
+                                <p>Enter Username: </p><input type="text" name="username" style="width: 180px;">
+                                <p>Password: </p> <input type="password" name="password" style="width: 180px;">
                                 <td><button type="submit" class="btn">Submit</button></td>
                             </form>
                         </tr>
                     </table>
                 </div>
-                <div class="new-students">
-                    <div class="title">
-                        <h2>New Students</h2>
-                        <a href="{% url 'add' %}" class="btn">Add New</a>
-                    </div>
-                    <table>
-                        <tr>
-                            <th>Martic. Number</th>
-                            <th>Name</th>
-                            <th>Option</th>
-                        </tr>
-                        {% for student in students %}
-                        {% if user.is_authenticated %}
-                        <tr>
-                            <td>{{student.name}}</td>
-                            <td>{{student.reg_no}}</td>
-                            <td><a href="{% url 'delete' student.id %}" class="btn">Delete</a></td>
-                        </tr>
-                        {% else %}
-                        <tr>
-                            <td>****** ******</td>
-                            <td>****** ******</td>
-                        </tr>
-                        {% endif %}
-                        {% endfor %}
 
-                    </table>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-
-    <script src="{% static 'js/app.js' %}"></script>
-</body>
-
-</html>
+                {% endblock %}

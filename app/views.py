@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Student
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from .forms import Studentform
 from django.template import loader
 from django.contrib.auth.models import User, auth
@@ -51,24 +52,20 @@ def register(request):
 
 
 def login_page(request):
-    page = 'login'
     if request.method == 'POST':
-        email = request.POST.get('email').lower
+        username = request.POST.get('username')
         password = request.POST.get('password')
-
-        try:
-            user = User.objects.get(email=email)
-
-        except:
-            messages.error('Non-existent user')
-
-        user = authenticate(email=email, password=password)
+        user = auth.authenticate(username=username, password=password)
 
         if user is not None:
-            login(request, user)
+            auth.login(request, user)
             return redirect('')
         else:
-            messages.error(request, 'Incorrect email or password')
-        
-    context= {'page', page}
-    return render(request, 'register.html', context)
+            messages.info(request, 'Invalid username')
+            return redirect('login')
+    else:    
+        return render(request, 'login.html')
+    
+def logout(request):
+    auth.logout(request)
+    return redirect('')
