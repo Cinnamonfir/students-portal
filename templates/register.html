@@ -1,0 +1,24 @@
+{% extends 'index.html' %}
+
+{% block content %}
+                <div class="subjects">
+                    <div class="title">
+                        <h2>All Courses</h2>
+                        <a href="#" class="btn">View All</a>
+                    </div>
+                    <table>
+                        <tr>
+                            {% for message in messages %}
+                            <h5>{{message}}</h5>
+                            {% endfor %}
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                <p>Enter Username: </p><input type="text" name="username" style="width: 180px;">
+                                <p>Password: </p> <input type="password" name="password" style="width: 180px;">
+                                <p>Confirm Password: </p> <input type="password" name="password2" style="width: 180px;">
+                                <td><button type="submit" class="btn">Submit</button></td>
+                            </form>
+                        </tr>
+                    </table>
+                </div>
+{% endblock %}

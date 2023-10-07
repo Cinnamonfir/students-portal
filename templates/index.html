@@ -1,0 +1,194 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/boxicons.min.css' %}">
+    <title>Student Databese</title>
+</head>
+
+<body>
+    <nav class="sidebar close">
+        <header>
+            <div class="image-index">
+                <span class="image">
+                    <img src="{% static 'images/logo.png' %}" alt="logo">
+                </span>
+                <div class="text header-text">
+                    {% if user.is_authenticated %}
+                    <span class="name">{{user.username}}</span>
+                    <span class="profession">Admin Dashboard</span>
+                    {% endif %}
+                </div>
+            </div>
+            <i class="bx bx-chevron-right toggle"></i>
+        </header>
+
+        <div class="menu-bar">
+            <div class="menu">
+                <li class="search-box">
+                    <i class="bx bx-search icon"></i>
+                    <input type="text" placeholder="Search...">
+                </li>
+
+                <ul class="menu-links">
+                    <li class="nav-links">
+                        <a href="{% url ''%}">
+                            <i class="bx bx-home-alt icon"></i>
+                            <span class="text nav-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-links">
+                        <a href="">
+                            <i class="bx bx-user-circle icon"></i>
+                            <span class="text nav-text">Students</span>
+                        </a>
+                    </li>
+                    <li class="nav-links">
+                        <a href="">
+                            <i class="bx bx-user-circle icon"></i>
+                            <span class="text nav-text">Teachers</span>
+                        </a>
+                    </li>
+                    <li class="nav-links">
+                        <a href="">
+                            <i class="bx bx-book-alt icon"></i>
+                            <span class="text nav-text">Courses</span>
+                        </a>
+                    </li>
+                    <li class="nav-links">
+                        <a href="">
+                            <i class="bx bx-wallet icon"></i>
+                            <span class="text nav-text">Wallet</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bottom-content">
+                {% if user.is_authenticated %}
+                <li class="">
+                    <a href="{% url 'logout' %}">
+                        <i class="bx bx-log-out icon"></i>
+                        <span class="text nav-text">Logout</span>
+                    </a>
+                </li>
+                {% else %}
+
+                <li class="">
+                    <a href="{% url 'login' %}">
+                        <i class="bx bx-log-out icon"></i>
+                        <span class="text nav-text">Login</span>
+                    </a>
+                </li>
+                {% endif %}
+                <li class="mode">
+                    <div class="moon-sun">
+                        <i class="bx bx-moon icon moon"></i>
+                        <i class="bx bx-sun icon sun"></i>
+                    </div>
+                    <span class="mode-text text">Dark Mode</span>
+
+                    <div class="toggle-switch">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+
+            </div>
+
+        </div>
+    </nav>
+
+    <section class="home">
+        <div class="text">Dashboard</div>
+
+        <div class="content">
+            <div class="cards">
+
+                <div class="card">
+                    <div class="box">
+                        <h1>{{students.count}}</h1>
+                        <h3>Students Registered</h3>
+                    </div>
+                    <div class="icon-case">
+                        <img src="{% static 'images/student.png' %}" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="content-2">
+                {% block content %}
+                <div class="subjects">
+                    <div class="title">
+                        <h2>All Courses</h2>
+                        {% if user.is_authenticated %}
+                        <a href="#" class="btn">View All</a>
+                        {% else %}
+                        <a href="#" class="btn"></a>
+                        {% endif %}
+                        
+                    </div>
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Code</th>
+                            <th>Faculty</th>
+                            <th>Option</th>
+                        </tr>
+                        <tr>
+                            <td>Introductory General Chemistry</td>
+                            <td>CHEM 101</td>
+                            <td>Physical Science</td>
+                            <td><a href="#" class="btn">View</a></td>
+                        </tr>
+                    </table>
+                </div>
+                {% endblock %}
+                <div class="new-students">
+                    <div class="title">
+                        <h2>New Students</h2>
+                        {% if user.is_authenticated%}
+                        <a href="{% url 'add' %}" class="btn">Add New</a>
+                        {% else %}
+                        <a href="{% url 'login' %}" class="btn">Login To View</a>
+                        {% endif %}
+
+                    </div>
+                    <table>
+                        <tr>
+                            <th>Martic. Number</th>
+                            <th>Name</th>
+                            <th>Option</th>
+                        </tr>
+                        {% for student in students %}
+                        {% if user.is_authenticated %}
+                        <tr>
+                            <td>{{student.name}}</td>
+                            <td>{{student.reg_no}}</td>
+                            <td><a href="{% url 'delete' student.id %}" class="btn">Delete</a></td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td>****** ******</td>
+                            <td>****** ******</td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <script src="{% static 'js/app.js' %}"></script>
+</body>
+
+</html>
