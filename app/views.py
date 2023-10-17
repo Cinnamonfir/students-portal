@@ -12,19 +12,20 @@ def index(request):
     students = Student.objects.all()
     context = {'students': students}
     return render(request, 'index.html', context)
+
 def delete_student(request, pk):
     student = Student.objects.get(id=pk)
     student.delete()
     return redirect('')
     
 def add(request):
-    form = Studentform(request.POST or None)
-
-    if form.is_valid():
-        form.save()
-        return redirect('')
-    
-    context = {'form': form}
+    form = Studentform()
+    if request.method == 'POST':
+        form = Studentform(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.info(request, 'Saved')
+    context={'form': form}
     return render(request, 'add.html', context)
 
 
@@ -56,12 +57,11 @@ def login_page(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = auth.authenticate(username=username, password=password)
-
         if user is not None:
             auth.login(request, user)
             return redirect('')
         else:
-            messages.info(request, 'Invalid username')
+            messages.info(request, 'Incorrect username or password')
             return redirect('login')
     else:    
         return render(request, 'login.html')
